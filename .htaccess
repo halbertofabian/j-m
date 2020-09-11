@@ -1,0 +1,15 @@
+RewriteEngine on
+
+# Impedir que se pueda ver el listado de contenido de directorios
+Options All -Indexes
+
+Options +FollowSymLinks
+Options -MultiViews
+
+
+
+#Urls Amigables 
+RewriteEngine On
+
+RewriteRule ^([-a-zA-Z0-9/ÁÉÍÓÚáéíóú]+)$ index.php?ruta=$1
+
