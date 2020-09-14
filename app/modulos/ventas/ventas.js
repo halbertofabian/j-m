@@ -1,6 +1,8 @@
 $(document).on("ready", function () {
-
 })
+
+
+
 listarVendedores();
 listarClientes();
 
@@ -13,7 +15,7 @@ $("#formAddVendedor").on("submit", function (e) {
 
     $.ajax({
         type: "POST",
-        url: './app/modulos/ventas/ventas.ajax.php',
+        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -50,7 +52,7 @@ function listarVendedores() {
 
     $.ajax({
         type: "POST",
-        url: './app/modulos/ventas/ventas.ajax.php',
+        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -85,7 +87,7 @@ $("#formAddCliente").on("submit", function (e) {
 
     $.ajax({
         type: "POST",
-        url: './app/modulos/ventas/ventas.ajax.php',
+        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -108,6 +110,76 @@ $("#formAddCliente").on("submit", function (e) {
                 toastr.error(res.mensaje, 'Error')
 
             }
+
+        }
+    });
+})
+
+$("#formGuardarAbono").on("submit", function (e) {
+    e.preventDefault()
+
+    var datos = new FormData(this)
+
+    datos.append("btnGuardarAbono", true)
+
+
+
+    $.ajax({
+        type: "POST",
+        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        data: datos,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+
+        },
+        success: function (res) {
+
+            if (res.status) {
+                swal({
+                    title: "Correcto",
+                    text: res.mensaje,
+                    icon: "success",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            window.location.href = res.pagina
+                        } else {
+                            window.location.href = res.pagina
+                        }
+                    });
+            } else {
+                toastr.error(res.mensaje, 'Error')
+            }
+
+
+        }
+    });
+})
+
+$(".tablaVentas tbody").on("click", "button.btnListarAbonos", function () {
+    vts_factura = $(this).attr("vts_factura")
+    $("#abs_venta").val(vts_factura)
+    var datos = new FormData()
+    datos.append("vts_factura", vts_factura)
+    datos.append("btnListarAbonos", true)
+
+    $.ajax({
+        type: "POST",
+        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        data: datos,
+        dataType: "html",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+
+        },
+        success: function (res) {
+
+            $("#historial-abonos").html(res)
 
         }
     });
@@ -146,7 +218,98 @@ function listarClientes() {
 }
 
 
-$(".inputN").number(true, 2);
+$('#daterange-btn').daterangepicker(
+    {
+        ranges: {
+            'Hoy': [moment(), moment()],
+            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Últimos 7 días': [moment().subtract(6, 'days'), moment()],
+            'Últimos 30 días': [moment().subtract(29, 'days'), moment()],
+            'Este mes': [moment().startOf('month'), moment().endOf('month')],
+            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment(),
+        endDate: moment()
+    },
+    function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+        var fechaInicial = start.format('YYYY-MM-DD');
+
+        var fechaFinal = end.format('YYYY-MM-DD');
+
+        var capturarRango = $("#daterange-btn span").html();
+
+        localStorage.setItem("capturarRango", capturarRango);
+
+        window.location = "index.php?ruta=ventas&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal;
+
+    }
+
+)
+
+/*=============================================
+CANCELAR RANGO DE FECHAS
+=============================================*/
+
+$(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function () {
+
+    localStorage.removeItem("capturarRango");
+    localStorage.clear();
+    window.location = "ventas";
+})
+
+/*=============================================
+CAPTURAR HOY
+=============================================*/
+
+$(".daterangepicker.opensleft .ranges li").on("click", function () {
+
+    var textoHoy = $(this).attr("data-range-key");
+
+    if (textoHoy == "Hoy") {
+
+        var d = new Date();
+
+        var dia = d.getDate();
+        var mes = d.getMonth() + 1;
+        var año = d.getFullYear();
+
+        // if(mes < 10){
+
+        // 	var fechaInicial = año+"-0"+mes+"-"+dia;
+        // 	var fechaFinal = año+"-0"+mes+"-"+dia;
+
+        // }else if(dia < 10){
+
+        // 	var fechaInicial = año+"-"+mes+"-0"+dia;
+        // 	var fechaFinal = año+"-"+mes+"-0"+dia;
+
+        // }else if(mes < 10 && dia < 10){
+
+        // 	var fechaInicial = año+"-0"+mes+"-0"+dia;
+        // 	var fechaFinal = año+"-0"+mes+"-0"+dia;
+
+        // }else{
+
+        // 	var fechaInicial = año+"-"+mes+"-"+dia;
+        //    	var fechaFinal = año+"-"+mes+"-"+dia;
+
+        // }
+
+        dia = ("0" + dia).slice(-2);
+        mes = ("0" + mes).slice(-2);
+
+        var fechaInicial = año + "-" + mes + "-" + dia;
+        var fechaFinal = año + "-" + mes + "-" + dia;
+
+        localStorage.setItem("capturarRango", "Hoy");
+
+        window.location = "index.php?ruta=ventas&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal;
+
+    }
+
+})
 
 var date = new Date();
 

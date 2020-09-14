@@ -1,11 +1,15 @@
 <?php
-require_once 'ventas.modelo.php';
-require_once 'ventas.controlador.php';
+session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] .'/j&m/app/modulos/ventas/ventas.modelo.php';
+require_once $_SERVER['DOCUMENT_ROOT'] .'/j&m/app/modulos/ventas/ventas.controlador.php';
+require_once $_SERVER['DOCUMENT_ROOT'] .'/j&m/app/modulos/app/app.controlador.php';
+
 
 class VentasAjax
 {
     public $usr_nombre;
     public $cts_nombre;
+    public $vts_factura;
 
     public function ajaxCrearVendedor()
     {
@@ -26,7 +30,7 @@ class VentasAjax
 
     public function ajaxCrearListaVendedores()
     {
-        
+
         $res = VentasModelo::mdlConsultarVendedores();
 
         echo json_encode($res);
@@ -34,11 +38,40 @@ class VentasAjax
 
     public function ajaxCrearListaClientes()
     {
-        
+
         $res = VentasModelo::mdlConsultarClientes();
 
         echo json_encode($res);
     }
+
+    public function ajaxListarAbonos()
+    {
+        $abonos = VentasModelo::mdlConsultarAbonosVentas($this->vts_factura);
+        // echo "<pre>", print_r($abonos), "</pre>";
+        $html = "";
+        foreach ($abonos as $key => $abs) {
+            $html .=
+                '
+                <tr>
+                    <td style="width: 10px;">' . $abs['abs_id'] . '</td>
+                    <td>' . $abs['abs_usuario_registro'] . '</td>
+                    <td>' . number_format($abs['abs_monto'], 2) . '</td>
+                    <td>' . $abs['abs_fecha'] . '</td>
+                    <td>' . number_format($abs['abs_adeudo'], 2) . '</td>
+                </tr>
+
+            ';
+        }
+        echo $html;
+    }
+
+    public function ajaxGuardarAbonos()
+    {
+
+        $crearAbono = VentasControlador::ctrCrearAbono();
+        echo json_encode($crearAbono, true);
+    }
+
 }
 
 if (isset($_POST['btnCrearVendedor'])) {
@@ -62,3 +95,15 @@ if (isset($_POST['btnListarClientes'])) {
     $listaClientes = new VentasAjax();
     $listaClientes->ajaxCrearListaClientes();
 }
+
+if (isset($_POST['btnListarAbonos'])) {
+    $ListarAbonos = new VentasAjax();
+    $ListarAbonos->vts_factura = $_POST['vts_factura'];
+    $ListarAbonos->ajaxListarAbonos();
+}
+
+if (isset($_POST['btnGuardarAbono'])) {
+    $guardarAbono = new VentasAjax();
+    $guardarAbono->ajaxGuardarAbonos();
+}
+

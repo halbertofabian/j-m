@@ -42,14 +42,15 @@ class VentasModelo
 
         try {
             //code...
-            $sql = "INSERT INTO tbl_abonos_abs (abs_venta,abs_monto,abs_fecha,abs_adeudo) VALUES (?,?,?,?) ";
+            $sql = "INSERT INTO tbl_abonos_abs (abs_venta,abs_monto,abs_fecha,abs_usuario_registro,abs_adeudo) VALUES (?,?,?,?,?) ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $abonos['abs_venta']);
             $pps->bindValue(2, $abonos['abs_monto']);
             $pps->bindValue(3, $abonos['abs_fecha']);
-            $pps->bindValue(4, $abonos['abs_adeudo']);
+            $pps->bindValue(4, $abonos['abs_usuario_registro']);
+            $pps->bindValue(5, $abonos['abs_adeudo']);
 
 
             $pps->execute();
@@ -167,6 +168,116 @@ class VentasModelo
                 $pps->execute();
                 return $pps->fetch();
             }
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    //SELECT vts.*,abs.* FROM tbl_ventas_vts vts JOIN tbl_abonos_abs abs ON vts.vts_factura = abs.abs_venta; 
+
+
+    public static function mdlConsultarSumaVentaVendedor($usr_id)
+    {
+        try {
+
+            $sql = "SELECT SUM(vts.vts_cantidad) AS vts_cantidad_total_vendedor FROM tbl_ventas_vts vts WHERE vts.vts_vendedor  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarSumaCreditoVendedor($usr_id)
+    {
+        try {
+
+            $sql = "SELECT SUM(vts.vts_cantidad) AS vts_cantidad_credito_vendedor FROM tbl_ventas_vts vts WHERE vts.vts_vendedor  = ? AND vts.vts_tp = 'Credito' ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarSumaContadoVendedor($usr_id)
+    {
+        try {
+
+            $sql = "SELECT SUM(vts.vts_cantidad) AS vts_cantidad_contado_vendedor FROM tbl_ventas_vts vts WHERE vts.vts_vendedor = ? AND vts.vts_tp = 'Contado' ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarSumaPagadoVendedor($usr_id)
+    {
+        try {
+
+            $sql = "SELECT SUM(abs.abs_monto) AS abs_monto_pagado FROM tbl_abonos_abs abs  JOIN tbl_ventas_vts vts ON vts.vts_factura = abs_venta WHERE vts.vts_vendedor = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarAbonosVentas($vts_factura)
+    {
+        try {
+
+            $sql = "SELECT vts.*,abs.*,usr.usr_nombre,cts.cts_nombre FROM tbl_ventas_vts vts JOIN tbl_abonos_abs abs ON vts.vts_factura = abs.abs_venta JOIN tbl_usuarios_usr usr ON vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON vts.vts_cliente = cts.cts_id WHERE vts.vts_factura  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $vts_factura);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarVentaAbono($datosA)
+    {
+
+        try {
+            $sql = "UPDATE tbl_ventas_vts SET vts_fecha_pagado = ? , vts_estado_pagado = ? WHERE vts_factura = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datosA['vts_fecha_pagado']);
+            $pps->bindValue(2, $datosA['vts_estado_pagado']);
+            $pps->bindValue(3, $datosA['vts_factura']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (\PDOException $th) {
             throw $th;
         } finally {

@@ -31,3 +31,9 @@ $(".tablas").DataTable({
     }
 
 });
+
+$('.select2').select2();
+
+$(".inputN").number(true, 2);
+
+var urlApp = $(".url-app").attr("urlApp")

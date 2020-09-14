@@ -3,9 +3,11 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <a href="<?php echo $url ?>" class="logo">
-            <!-- <img src="<?php //echo $url .'app/assets/'?>images/logo.png" alt="" height="20" class="logo-large">
-            <img src="<?php //echo $url .'app/assets/'?>images/logo-sm.png" alt="" height="22" class="logo-sm"> -->
-            <span class="text-light" style="font-weight: bold; font-size: 22px;">J&M</span>
+             <img src="<?php echo $url .'app/assets/'?>images/j-m-logo-b.png" alt="" height="50" class="logo-large">
+            <!-- <img src="<?php //echo $url .'app/assets/'?>images/logo-sm.png" alt="" height="22" class="logo-sm"> --> 
+            <img src="<?php echo $url .'app/assets/'?>images/j-m-logo-b.png" alt="" height="40" class="logo-sm">
+
+            <!-- <span class="text-light logo-sm" style="font-weight: bold; font-size: 22px;">J&M</span> -->
         </a>
     </div>
 

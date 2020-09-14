@@ -16,10 +16,7 @@
                     <ul class="submenu collapse">
                         <li><a href="<?php echo $url .'ventas' ?>">Nueva venta</a></li>
                         <li><a href="<?php echo $url .'listar-ventas' ?>">Listar ventas</a></li>
- 
-
-                        <li><a href="#">Abonos</a></li>
-                        <li><a href="#">Kardex</a></li>
+                        <li><a href="<?php echo $url .'kardex' ?>">Kardex</a></li>
 
                     </ul>
                 </li>

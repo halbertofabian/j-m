@@ -15,7 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App Icons -->
-    <link rel="shortcut icon" href="<?php echo $url . 'app/assets/' ?>images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo $url . 'app/assets/' ?>images/j-m-logo-b.png">
+
+
+
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="<?php echo $url . 'app/plugins/' ?>morris/morris.css">
@@ -24,6 +27,8 @@
     <link href="<?php echo $url . 'app/assets/' ?>css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $url . 'app/assets/' ?>css/metismenu.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $url . 'app/assets/' ?>css/icons.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $url . 'app/assets/' ?>icons/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <link href="<?php echo $url . 'app/assets/' ?>css/style.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $url . 'app/plugins/toastr/build/toastr.min.css' ?>" rel="stylesheet" />
     <link href="<?php echo $url . 'app/plugins/select2/css/select2.min.css' ?>" rel="stylesheet" />
@@ -34,6 +39,9 @@
 
     <!-- Responsive datatable examples -->
     <link href="<?php echo $url ?>app/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="<?php echo $url ?>app/plugins/date-range-picker/css/daterangepicker.css" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -67,6 +75,9 @@
     <script src="<?php echo $url ?>app/plugins/datatables/dataTables.responsive.min.js"></script>
     <script src="<?php echo $url ?>app/plugins/datatables/responsive.bootstrap4.min.js"></script>
 
+    <script src="<?php echo $url ?>app/plugins/date-range-picker/js/moment.js"></script>
+
+    <script src="<?php echo $url ?>app/plugins/date-range-picker/js/daterangepicker.js"></script>
 
 
 
@@ -75,6 +86,8 @@
 
 
 <body class="fixed-left">
+    <div class="url-app" urlApp="<?php echo $url ?>"></div>
+
 
     <script>
 
@@ -113,7 +126,11 @@
                             if (
                                 $arrayRutas[0] == 'salir' ||
                                 $arrayRutas[0] == 'ventas' ||
-                                $arrayRutas[0] == 'listar-ventas'
+                                $arrayRutas[0] == 'listar-ventas' ||
+                                $arrayRutas[0] == 'kardex' ||
+                                $arrayRutas[0] == 'abonos'
+
+
 
 
                             ) {
@@ -150,6 +167,8 @@
     <?php endif; ?>
 
 
+    <script src="<?php echo $url . 'app/modulos/app/app.js' ?>"></script>
+
 
     <!--Morris Chart-->
     <script src="<?php echo $url . 'app/plugins/' ?>morris/morris.min.js"></script>
@@ -161,7 +180,6 @@
     <script src="<?php echo $url . 'app/assets/' ?>js/app.js"></script>
 
     <script src="<?php echo $url . 'app/modulos/ventas/ventas.js' ?>"></script>
-    <script src="<?php echo $url . 'app/modulos/app/app.js' ?>"></script>
 
 
 

@@ -9,8 +9,8 @@
                     <h4 class="font-18 mt-3 m-b-5">Bienvenidos a J&M Médica </h4>
                     <p class="text-muted">Inicia sesión para entrar al sistema.</p>
                 </div>
-                <span class="text-dark" style="font-weight: bold; font-size: 48px;">J&M</span>
-                <!-- <a href="index.html" class="logo-admin"><img src="<?php echo $url . 'app/' ?>assets/images/logo_dark.png" height="26" alt="logo"></a> -->
+                <!-- <span class="text-dark" style="font-weight: bold; font-size: 48px;">J&M</span> -->
+                <a href="<?php $url ?>" class="logo-admin"><img src="<?php echo $url . 'app/' ?>assets/images/j-m-logo.png" height="100" alt="logo"></a>
             </div>
 
             <div class="p-3">

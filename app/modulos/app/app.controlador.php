@@ -3,7 +3,8 @@ class AppControlador
 {
     public static function obtenerRutaBackend()
     {
-        return 'http://localhost/j&m/';
+         return 'http://localhost/j&m/';
+        //return 'http://192.168.100.228/j&m/';
     }
     public  function iniciarApp()
     {
