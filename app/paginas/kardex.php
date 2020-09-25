@@ -19,53 +19,58 @@
 
         $vendedores = VentasModelo::mdlConsultarVendedores();
         // var_dump($vendedores);
+        
         foreach ($vendedores as $key => $usr) :
         ?>
-            <div class="col-md-4 col-12 ">
+            <div class="col-md-5 col-12 ">
                 <div class="card">
 
                     <div class="card-body text-center">
                         <h4 class="card-title"><?php echo ucwords(strtolower($usr['usr_nombre'])) ?></h4>
-                        <table class="table table-light table-bordered table-striped">
-                            <tr>
-                                <th>Venta</th>
-                                <th>Credito</th>
-                                <th>Pagado</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <?php
-                                    $ventaTotal = VentasModelo::mdlConsultarSumaVentaVendedor($usr['usr_id']);
-                                    echo  number_format($ventaTotal['vts_cantidad_total_vendedor'], 2);
-                                    ?>
-                                </td>
-                                <td class="text-danger">
-                                    <?php
-                                    $creditoTotal = VentasModelo::mdlConsultarSumaCreditoVendedor($usr['usr_id']);
-                                    echo number_format($creditoTotal['vts_cantidad_credito_vendedor'], 2);
-                                    ?>
-                                </td>
-                                <td class="text-success">
-                                    <?php
-                                    $monto = VentasModelo::mdlConsultarSumaPagadoVendedor($usr['usr_id']);
-                                    echo number_format($monto['abs_monto_pagado'], 2);
-                                    ?>
-                                </td>
+                        <div class="table-responsive">
 
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Contado:</td>
-                                <td class="text-success">
+                            <table class="table table-light table-bordered table-striped">
+                                <tr>
+                                    <th>Venta</th>
+                                    <th>Credito</th>
+                                    <th>Transferencia / Cheque</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php
+                                        $ventaTotal = VentasModelo::mdlConsultarSumaVentaVendedor($usr['usr_id']);
+                                        echo  number_format($ventaTotal['vts_cantidad_total_vendedor'], 2);
+                                        ?>
+                                    </td>
+                                    <td class="text-danger">
+                                        <?php
+                                        $creditoTotal = VentasModelo::mdlConsultarSumaCreditoVendedor($usr['usr_id']);
+                                        echo number_format($creditoTotal['vts_cantidad_credito_vendedor'], 2);
+                                        ?>
+                                    </td>
+                                    <td class="text-success">
+                                        <?php
+                                        $monto = VentasModelo::mdlConsultarSumaPagadoVendedor($usr['usr_id']);
+                                        echo number_format($monto['abs_monto_pagado'], 2);
+                                        ?>
+                                    </td>
 
-                                    <?php
-                                    $contadoTotal = VentasModelo::mdlConsultarSumaContadoVendedor($usr['usr_id']);
-                                    echo number_format($contadoTotal['vts_cantidad_contado_vendedor'], 2);
-                                    ?>
-                                </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Efectivo:</td>
+                                    <td class="text-success">
 
-                            </tr>
-                        </table>
+                                        <?php
+                                        $contadoTotal = VentasModelo::mdlConsultarSumaContadoVendedor($usr['usr_id']);
+                                        echo number_format($contadoTotal['vts_cantidad_contado_vendedor'], 2);
+                                        ?>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>

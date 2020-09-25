@@ -12,12 +12,20 @@
                     Factura #<?php echo $rutas[1] ?>
                     <form method="post" id="formGuardarAbono">
                         <div class="row justify-content-center">
-                            <div class="col-4">
+                            <div class="col-12">
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="abs_mp">Método de pago</label>
+                                    <select name="abs_mp" id="abs_mp" class="form-control">
+                                        <option value="Transferencia">Transferencia</option>
+                                        <option value="Efectivo">Efectivo</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="abs_monto">Ingresa el abono</label>
                                     <input type="text" name="abs_monto" id="abs_monto" class="form-control inputN" placeholder="0.00" required>

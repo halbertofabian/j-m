@@ -2,7 +2,7 @@
 
     <!-- LOGO -->
     <div class="topbar-left">
-        <a href="<?php echo $url ?>" class="logo">
+        <a href="<?php echo $url.'home' ?>" class="logo">
              <img src="<?php echo $url .'app/assets/'?>images/j-m-logo-b.png" alt="" height="50" class="logo-large">
             <!-- <img src="<?php //echo $url .'app/assets/'?>images/logo-sm.png" alt="" height="22" class="logo-sm"> --> 
             <img src="<?php echo $url .'app/assets/'?>images/j-m-logo-b.png" alt="" height="40" class="logo-sm">

@@ -47,7 +47,7 @@
         if ($(window).width() < 1025) {
             $('body').addClass('enlarged');
         } else {
-            $('body').removeClass('enlarged');
+            //$('body').removeClass('enlarged');
         }
     },
 

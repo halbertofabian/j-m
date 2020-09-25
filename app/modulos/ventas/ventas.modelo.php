@@ -1,6 +1,6 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/j&m/app/modulos/conexion/conexion.php';
+require_once DOCUMENT_ROOT . 'app/modulos/conexion/conexion.php';
 
 class VentasModelo
 {
@@ -9,19 +9,24 @@ class VentasModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_ventas_vts (vts_factura,vts_vendedor,vts_cliente,vts_cantidad,vts_fecha_venta,vts_tp,vts_fecha_pagado,vts_estado_pagado,vts_usuario_registro) VALUES (?,?,?,?,?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_ventas_vts (vts_factura,vts_tv,vts_vendedor,vts_cliente,vts_cantidad,vts_fecha_venta,vts_fecha_cobro,vts_mp,vts_tp,vts_fecha_pagado,vts_estado_pagado,vts_usuario_registro,vts_nota) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ventas['vts_factura']);
-            $pps->bindValue(2, $ventas['vts_vendedor']);
-            $pps->bindValue(3, $ventas['vts_cliente']);
-            $pps->bindValue(4, $ventas['vts_cantidad']);
-            $pps->bindValue(5, $ventas['vts_fecha_venta']);
-            $pps->bindValue(6, $ventas['vts_tp']);
-            $pps->bindValue(7, $ventas['vts_fecha_pagado']);
-            $pps->bindValue(8, $ventas['vts_estado_pagado']);
-            $pps->bindValue(9, $ventas['vts_usuario_registro']);
+            $pps->bindValue(2, $ventas['vts_tv']);
+            $pps->bindValue(3, $ventas['vts_vendedor']);
+            $pps->bindValue(4, $ventas['vts_cliente']);
+            $pps->bindValue(5, $ventas['vts_cantidad']);
+            $pps->bindValue(6, $ventas['vts_fecha_venta']);
+            $pps->bindValue(7, $ventas['vts_fecha_cobro']);
+            $pps->bindValue(8, $ventas['vts_mp']);
+            $pps->bindValue(9, $ventas['vts_tp']);
+            $pps->bindValue(10, $ventas['vts_fecha_pagado']);
+            $pps->bindValue(11, $ventas['vts_estado_pagado']);
+            $pps->bindValue(12, $ventas['vts_usuario_registro']);
+            $pps->bindValue(13, $ventas['vts_nota']);
+
             // $pps->bindValue(9, $ventas['vts_detalle_abono']);
 
 
@@ -42,7 +47,7 @@ class VentasModelo
 
         try {
             //code...
-            $sql = "INSERT INTO tbl_abonos_abs (abs_venta,abs_monto,abs_fecha,abs_usuario_registro,abs_adeudo) VALUES (?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_abonos_abs_ventas (abs_venta,abs_monto,abs_fecha,abs_usuario_registro,abs_adeudo,abs_mp) VALUES (?,?,?,?,?,?) ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
@@ -51,7 +56,7 @@ class VentasModelo
             $pps->bindValue(3, $abonos['abs_fecha']);
             $pps->bindValue(4, $abonos['abs_usuario_registro']);
             $pps->bindValue(5, $abonos['abs_adeudo']);
-
+            $pps->bindValue(6, $abonos['abs_mp']);
 
             $pps->execute();
 
@@ -74,7 +79,7 @@ class VentasModelo
                 $pps->execute();
                 return $pps->fetchAll();
             } elseif ($vts_factura != "") {
-                $sql = "SELECT vts.*,usr.usr_nombre,cts.cts_nombre,abs.* FROM tbl_ventas_vts vts JOIN  tbl_usuarios_usr usr ON  vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON  vts.vts_cliente = cts.cts_id JOIN tbl_abonos_abs abs ON abs.abs_venta = vts.vts_factura                WHERE vts.vts_factura  = ? ";
+                $sql = "SELECT vts.*,usr.usr_nombre,cts.cts_nombre,abs.* FROM tbl_ventas_vts vts JOIN  tbl_usuarios_usr usr ON  vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON  vts.vts_cliente = cts.cts_id JOIN tbl_abonos_abs_ventas abs ON abs.abs_venta = vts.vts_factura WHERE vts.vts_factura  = ? ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $vts_factura);
@@ -176,7 +181,7 @@ class VentasModelo
         }
     }
 
-    //SELECT vts.*,abs.* FROM tbl_ventas_vts vts JOIN tbl_abonos_abs abs ON vts.vts_factura = abs.abs_venta; 
+    //SELECT vts.*,abs.* FROM tbl_ventas_vts vts JOIN tbl_abonos_abs_ventas abs ON vts.vts_factura = abs.abs_venta; 
 
 
     public static function mdlConsultarSumaVentaVendedor($usr_id)
@@ -218,7 +223,7 @@ class VentasModelo
     {
         try {
 
-            $sql = "SELECT SUM(vts.vts_cantidad) AS vts_cantidad_contado_vendedor FROM tbl_ventas_vts vts WHERE vts.vts_vendedor = ? AND vts.vts_tp = 'Contado' ";
+            $sql = "SELECT SUM(vts.vts_cantidad) AS vts_cantidad_contado_vendedor FROM tbl_ventas_vts vts WHERE vts.vts_vendedor = ? AND vts.vts_mp = 'Efectivo' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr_id);
@@ -235,7 +240,7 @@ class VentasModelo
     {
         try {
 
-            $sql = "SELECT SUM(abs.abs_monto) AS abs_monto_pagado FROM tbl_abonos_abs abs  JOIN tbl_ventas_vts vts ON vts.vts_factura = abs_venta WHERE vts.vts_vendedor = ? ";
+            $sql = "SELECT SUM(vts.vts_cantidad) AS abs_monto_pagado FROM tbl_ventas_vts vts WHERE vts.vts_vendedor = ? AND vts.vts_mp = 'Transferencia' OR vts.vts_mp = 'Cheque'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr_id);
@@ -253,7 +258,7 @@ class VentasModelo
     {
         try {
 
-            $sql = "SELECT vts.*,abs.*,usr.usr_nombre,cts.cts_nombre FROM tbl_ventas_vts vts JOIN tbl_abonos_abs abs ON vts.vts_factura = abs.abs_venta JOIN tbl_usuarios_usr usr ON vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON vts.vts_cliente = cts.cts_id WHERE vts.vts_factura  = ? ";
+            $sql = "SELECT vts.*,abs.*,usr.usr_nombre,cts.cts_nombre FROM tbl_ventas_vts vts JOIN tbl_abonos_abs_ventas abs ON vts.vts_factura = abs.abs_venta JOIN tbl_usuarios_usr usr ON vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON vts.vts_cliente = cts.cts_id WHERE vts.vts_factura  = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $vts_factura);

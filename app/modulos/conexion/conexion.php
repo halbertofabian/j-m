@@ -9,9 +9,9 @@ class Conexion
         try {
             //code...
             $link = new PDO(
-                "mysql:host=localhost;dbname=db_medica",
-                "root",
-                ""
+                "mysql:host=".DB_HOST.";dbname=".DB_NAME,
+                DB_USER,
+                DB_PASSWORD
             );
 
             $link->exec("set names utf8");

@@ -1,6 +1,6 @@
 <?php
-// require_once './app/config/conexion.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/j&m/app/modulos/conexion/conexion.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/conexion/conexion.php';
 
 class LoginModelo
 {

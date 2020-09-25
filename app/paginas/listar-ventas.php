@@ -17,8 +17,10 @@
                             <th>Vendedor</th>
                             <th>Cliente</th>
                             <th>Fecha de venta</th>
+                            <th>Fecha de cobro</th>
                             <th>Cantidad</th>
                             <th>Tipo de pago</th>
+                            <th>Método de pago</th>
                             <th>Fecha pagado</th>
                         </tr>
                     </thead>
@@ -39,8 +41,11 @@
                                 <td><?php echo $vts['usr_nombre'] ?></td>
                                 <td><?php echo $vts['cts_nombre'] ?></td>
                                 <td><?php echo $vts['vts_fecha_venta'] ?></td>
+                                <td><?php echo $vts['vts_fecha_cobro'] ?></td>
                                 <td><?php echo number_format($vts['vts_cantidad'], 2) ?></td>
                                 <td><?php echo $vts['vts_tp'] ?></td>
+                                <td><?php echo $vts['vts_mp'] ?></td>
+
                                 <td><?php echo $vts['vts_fecha_pagado'] ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -78,7 +83,19 @@
                     <form method="post" id="formGuardarAbono">
                         <div class="row justify-content-center">
 
-                            <div class="col-12">
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label for="abs_mp">Método de pago</label>
+                                    <select name="abs_mp" id="abs_mp" class="form-control">
+                                        <option value="Transferencia">Transferencia</option>
+                                        <option value="Efectivo">Efectivo</option>
+                                        <option value="Cheque">Cheque</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 col-md-4">
                                 <div class="form-group">
                                     <label for="abs_monto">Ingresa el abono</label>
                                     <input type="text" name="abs_monto" id="abs_monto" class="form-control inputN" placeholder="0.00" required>

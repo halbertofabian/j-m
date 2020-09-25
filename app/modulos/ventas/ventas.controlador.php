@@ -3,7 +3,7 @@ class VentasControlador
 {
     public static function ctrGuardarVenta()
     {
-
+        
         if (isset($_POST['btnGuardarVenta'])) {
 
             date_default_timezone_set('America/Mexico_city');
@@ -40,6 +40,7 @@ class VentasControlador
                     'abs_fecha' => date("Y-m-d H:i:s"),
                     'abs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
                     'abs_adeudo' => $_POST['abs_adeudo'],
+                    'abs_mp' => $_POST['vts_mp'],
 
                 ));
                 if ($crearAbono) {
@@ -148,6 +149,7 @@ class VentasControlador
                 'abs_fecha' => date("Y-m-d H:i:s"),
                 'abs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
                 'abs_adeudo' => $abs_adeudo_cal,
+                'abs_mp' => $_POST['abs_mp']
 
             ));
             if ($crearAbono) {

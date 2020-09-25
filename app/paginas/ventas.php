@@ -2,7 +2,7 @@
 <div class="container">
   <form method="post">
     <div class="row">
-      <div class="form-group col-6">
+      <div class="form-group col-md-6 col-12">
         <label for="vts_vendedor">Nombre del vendedor</label>
         <select name="vts_vendedor" id="vts_vendedor" class="form-control select2">
           <option value="">Elija el vendedor</option>
@@ -11,7 +11,7 @@
           Agregar nuevo vendedor
         </button>
       </div>
-      <div class="form-group col-6">
+      <div class="form-group col-md-6 col-12">
         <label for="vts_cliente">Nombre del Cliente</label>
         <select name="vts_cliente" id="vts_cliente" class="form-control select2">
           <option value="">Elija el cliente</option>
@@ -20,6 +20,13 @@
           Agregar nuevo cliente
         </button>
       </div>
+      <div class="form-group col-md-4">
+        <label for="vts_tv">Tipo de venta</label>
+        <select name="vts_tv" id="vts_tv" class="form-control">
+          <option value="Factura">Factura</option>
+          <option value="Remisión">Remisión</option>
+        </select>
+      </div>
       <div class="form-group col-md-4 col-12">
         <label for="vts_factura">Nota de venta</label>
         <input type="text" name="vts_factura" id="vts_factura" class="form-control" placeholder="Introduce la nota de venta aquí">
@@ -27,6 +34,10 @@
       <div class="form-group col-md-4 col-12">
         <label for="vts_fecha_venta">Fecha de venta</label>
         <input type="date" name="vts_fecha_venta" id="vts_fecha_venta" class="form-control theDate">
+      </div>
+      <div class="form-group col-md-4 col-12">
+        <label for="vts_fecha_cobro">Fecha de cobro</label>
+        <input type="date" name="vts_fecha_cobro" id="vts_fecha_cobro" class="form-control theDateTo">
       </div>
       <div class="form-group col-md-4 col-12">
         <label for="vts_cantidad">Cantidad</label>
@@ -44,11 +55,23 @@
           <option value="Contado">Contado</option>
         </select>
       </div>
+      <div class="form-group col-md-4">
+        <label for="vts_mp">Método de pago</label>
+        <select name="vts_mp" id="vts_mp" class="form-control">
+          <option value="Transferencia">Transferencia</option>
+          <option value="Efectivo">Efectivo</option>
+          <option value="Cheque">Cheque</option>
+        </select>
+      </div>
       <div class="form-group col-md-4 col-12">
         <label for="abs_monto">Monto</label>
-        <input type="text" name="abs_monto" id="abs_monto" class="form-control inputN" placeholder="0.00">
+        <input type="text" name="abs_monto" id="abs_monto" class="form-control inputN" value="0.00" placeholder="0.00">
       </div>
-      <div class="form-group col-md-12 col-12">
+      <div class="form-group col-12 col-md-8">
+              <label for="vts_nota">Nota</label>
+              <textarea class="form-control" name="vts_nota" id="vts_nota" cols="30" rows="5"></textarea>
+            </div>
+      <div class="form-group col-md-4 col-12">
         <button type="submit" class="btn btn-primary float-right" name="btnGuardarVenta">Guardar venta</button>
       </div>
 
@@ -73,7 +96,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" id="formAddVendedor" >
+      <form method="post" id="formAddVendedor">
         <div class="modal-body">
 
           <div class="form-group">
@@ -101,7 +124,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" id="formAddCliente" >
+      <form method="post" id="formAddCliente">
         <div class="modal-body">
 
           <div class="form-group">
@@ -122,19 +145,19 @@
 
 
 <script>
-  
+
 </script>
 
 
 <script>
-     $(function() {
-         $('#mdlVendedor').on('shown.bs.modal', function(e) {
-             $('#usr_nombre').focus();
-         })
-     });
-     $(function() {
-         $('#mdlCliente').on('shown.bs.modal', function(e) {
-             $('#cts_nombre').focus();
-         })
-     });
- </script>
+  $(function() {
+    $('#mdlVendedor').on('shown.bs.modal', function(e) {
+      $('#usr_nombre').focus();
+    })
+  });
+  $(function() {
+    $('#mdlCliente').on('shown.bs.modal', function(e) {
+      $('#cts_nombre').focus();
+    })
+  });
+</script>

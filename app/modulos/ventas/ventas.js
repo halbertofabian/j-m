@@ -15,7 +15,7 @@ $("#formAddVendedor").on("submit", function (e) {
 
     $.ajax({
         type: "POST",
-        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -52,7 +52,7 @@ function listarVendedores() {
 
     $.ajax({
         type: "POST",
-        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -87,7 +87,7 @@ $("#formAddCliente").on("submit", function (e) {
 
     $.ajax({
         type: "POST",
-        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -126,7 +126,7 @@ $("#formGuardarAbono").on("submit", function (e) {
 
     $.ajax({
         type: "POST",
-        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,
@@ -169,7 +169,7 @@ $(".tablaVentas tbody").on("click", "button.btnListarAbonos", function () {
 
     $.ajax({
         type: "POST",
-        url: urlApp+'app/modulos/ventas/ventas.ajax.php',
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "html",
         processData: false,
@@ -275,28 +275,6 @@ $(".daterangepicker.opensleft .ranges li").on("click", function () {
         var mes = d.getMonth() + 1;
         var año = d.getFullYear();
 
-        // if(mes < 10){
-
-        // 	var fechaInicial = año+"-0"+mes+"-"+dia;
-        // 	var fechaFinal = año+"-0"+mes+"-"+dia;
-
-        // }else if(dia < 10){
-
-        // 	var fechaInicial = año+"-"+mes+"-0"+dia;
-        // 	var fechaFinal = año+"-"+mes+"-0"+dia;
-
-        // }else if(mes < 10 && dia < 10){
-
-        // 	var fechaInicial = año+"-0"+mes+"-0"+dia;
-        // 	var fechaFinal = año+"-0"+mes+"-0"+dia;
-
-        // }else{
-
-        // 	var fechaInicial = año+"-"+mes+"-"+dia;
-        //    	var fechaFinal = año+"-"+mes+"-"+dia;
-
-        // }
-
         dia = ("0" + dia).slice(-2);
         mes = ("0" + mes).slice(-2);
 
@@ -317,11 +295,30 @@ var day = date.getDate();
 var month = date.getMonth() + 1;
 var year = date.getFullYear();
 
+
+
 if (month < 10) month = "0" + month;
 if (day < 10) day = "0" + day;
-
 var today = year + "-" + month + "-" + day;
-// Siempre serÃ¡ validado, incluso si #undiv no existe
-// document.getElementsByClassName('theDate').value = today;
+
+
 $(".theDate").val(today)
+
+
+var dateTo = new Date();
+
+var dayTo = dateTo.getDate();
+var monthTo = dateTo.getMonth() + 2;
+var yearTo = dateTo.getFullYear();
+
+
+
+if (monthTo < 10) monthTo = "0" + monthTo;
+if (dayTo < 10) dayTo = "0" + dayTo;
+var todayTo = yearTo + "-" + monthTo + "-" + dayTo;
+
+
+$(".theDateTo").val(todayTo)
+
+
 

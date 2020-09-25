@@ -3,7 +3,7 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -79,13 +79,15 @@
 
     <script src="<?php echo $url ?>app/plugins/date-range-picker/js/daterangepicker.js"></script>
 
+    <script src="<?php echo $url ?>app/plugins/chart.js/chart.min.js"></script>
+
 
 
 </head>
 
 
 
-<body class="fixed-left">
+<body class="fixed-left enlarged">
     <div class="url-app" urlApp="<?php echo $url ?>"></div>
 
 
@@ -118,6 +120,7 @@
                     <div class="container-fluid">
 
                         <?php
+                    
 
                         $arrayRutas = array();
 
@@ -128,9 +131,13 @@
                                 $arrayRutas[0] == 'ventas' ||
                                 $arrayRutas[0] == 'listar-ventas' ||
                                 $arrayRutas[0] == 'kardex' ||
-                                $arrayRutas[0] == 'abonos'
-
-
+                                $arrayRutas[0] == 'abonos' ||
+                                $arrayRutas[0] == 'home' ||
+                                $arrayRutas[0] == 'compras' ||
+                                $arrayRutas[0] == 'listar-compras' ||
+                                $arrayRutas[0] == 'gastos' ||
+                                $arrayRutas[0] == 'listar-gastos' ||
+                                $arrayRutas[0] == 'categorias'
 
 
                             ) {
@@ -180,6 +187,10 @@
     <script src="<?php echo $url . 'app/assets/' ?>js/app.js"></script>
 
     <script src="<?php echo $url . 'app/modulos/ventas/ventas.js' ?>"></script>
+    <script src="<?php echo $url . 'app/modulos/compras/compras.js' ?>"></script>
+    <script src="<?php echo $url . 'app/modulos/gastos/gastos.js' ?>"></script>
+
+
 
 
 

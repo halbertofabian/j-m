@@ -2,9 +2,8 @@
 class AppControlador
 {
     public static function obtenerRutaBackend()
-    {
-         return 'http://localhost/j&m/';
-        //return 'http://192.168.100.228/j&m/';
+    { 
+        return HTTP_HOST;
     }
     public  function iniciarApp()
     {
@@ -32,43 +31,42 @@ class AppControlador
 
         if ($pagina == "") {
             echo
-            
                 '
             <script>    
-            swal({
-                title: "' . $titulo . '",
-                text: "' . $mensaje . '",
-                icon: "' . $tipo . '",
-                buttons: ["Cancelar","Continuar"],
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    window.history.back();
-                } else {
-                    window.history.back();
-                }
-            });
+                swal({
+                    title: "' . $titulo . '",
+                    text: "' . $mensaje . '",
+                    icon: "' . $tipo . '",
+                    buttons: [false,"Continuar"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.history.back();
+                    } else {
+                        window.history.back();
+                    }
+                });
             </script> 
         ';
         } else {
             echo
                 '
             <script> 
-            swal({
-                title: "' . $titulo . '",
-                text: "' . $mensaje . '",
-                icon: "' . $tipo . '",
-                buttons: ["Cancelar","Continuar"],
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    location.href = "' . $pagina . '"
-                } else {
-                    location.href = "' . $pagina . '"
-                }
-            });
+                swal({
+                    title: "' . $titulo . '",
+                    text: "' . $mensaje . '",
+                    icon: "' . $tipo . '",
+                    buttons: [false,"Continuar"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        location.href = "' . $pagina . '"
+                    } else {
+                        location.href = "' . $pagina . '"
+                    }
+                });
             </script> 
         ';
         }

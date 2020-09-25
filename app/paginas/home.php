@@ -12,8 +12,7 @@
                 <div class="col-md-4">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
-                            <button class="btn btn-primary btn-rounded dropdown-toggle" type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-primary btn-rounded dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="ti-settings mr-1"></i> Settings
                             </button>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
@@ -43,9 +42,7 @@
                         <p class="text-white-50">From previous period</p>
                     </div>
 
-                    <span class="peity-pie"
-                        data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"]}' data-width="54"
-                        data-height="54">5/8</span>
+                    <span class="peity-pie" data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"]}' data-width="54" data-height="54">5/8</span>
                 </div>
             </div>
             <div class="ml-3 mr-3">
@@ -66,9 +63,7 @@
                         <p class="text-white-50">From previous period</p>
                     </div>
 
-                    <span class="peity-donut"
-                        data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"], "innerRadius": 18, "radius": 32 }'
-                        data-width="54" data-height="54">2/5</span>
+                    <span class="peity-donut" data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"], "innerRadius": 18, "radius": 32 }' data-width="54" data-height="54">2/5</span>
                 </div>
             </div>
             <div class="ml-3 mr-3">
@@ -89,9 +84,7 @@
                         <p class="text-white-50">From previous period</p>
                     </div>
 
-                    <span class="peity-pie"
-                        data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"]}' data-width="54"
-                        data-height="54">3/8</span>
+                    <span class="peity-pie" data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"]}' data-width="54" data-height="54">3/8</span>
                 </div>
             </div>
             <div class="ml-3 mr-3">
@@ -111,9 +104,7 @@
                         <span class="badge badge-light text-info mt-2 mb-2"> - 89% </span>
                         <p class="text-white-50">From previous period</p>
                     </div>
-                    <span class="peity-donut"
-                        data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"], "innerRadius": 18, "radius": 32 }'
-                        data-width="54" data-height="54">3/5</span>
+                    <span class="peity-donut" data-peity='{ "fill": ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.2)"], "innerRadius": 18, "radius": 32 }' data-width="54" data-height="54">3/5</span>
                 </div>
             </div>
             <div class="ml-3 mr-3">
@@ -129,28 +120,94 @@
 <!-- end row -->
 
 <div class="row">
-    <div class="col-xl-9">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="mt-0 header-title mb-5">Monthly Earning</h4>
-                <div id="morris-bar-stacked" class="morris-chart-height morris-charts"></div>
+
+    <div class="col-12 col-md-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Title</h3>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var chart = new Chart(ctx, {
+                                // The type of chart we want to create
+                                type: 'pie',
+
+                                // The data for our dataset
+                                data: {
+                                    labels: ['Banco', 'Caja'],
+                                    datasets: [{
+                                        label: 'Flujo de caja',
+                                        backgroundColor: [
+                                            'rgb(21,140,164)',
+                                            'rgb(22,49,90)',
+                                        ],
+                                        borderColor: 'rgb(208,219,226)',
+                                        data: [40, 60]
+                                    }]
+                                },
+
+                                // Configuration options go here
+                                options: {}
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-12 col-md-8">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Title</h3>
+                        <center>
+                            <table class="table table-striped table-inverse table-responsive">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th width="80%">Total en banco</th>
+                                        <th width="20%">12,3456.00</th>
+
+                                    </tr>
+                                    <tr>
+                                        <th width="80%">Total en caja</th>
+                                        <th width="20%">12,3456.00</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="80%" scope="row">Total</td>
+                                        <td width="20%">12,3456.00</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </center>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-xl-3">
+    <div class="col-xl-9">
         <div class="card">
             <div class="card-body">
-                <h4 class="mt-0 header-title">Sales Analytics</h4>
+                <h4 class="mt-0 header-title"></h4>
 
                 <div class="row text-center m-t-20">
                     <div class="col-6">
                         <h5 class="">56241</h5>
-                        <p class="text-muted font-14">Marketplace</p>
+                        <p class="text-muted font-14">Banco</p>
                     </div>
                     <div class="col-6">
                         <h5 class="">23651</h5>
-                        <p class="text-muted font-14">Total Income</p>
+                        <p class="text-muted font-14">Efectivo</p>
                     </div>
                 </div>
 
@@ -168,9 +225,7 @@
             <div class="card-body">
                 <h4 class="mt-0 header-title">Weekly Sales</h4>
                 <div class="py-4">
-                    <span class="peity-line" data-width="100%"
-                        data-peity='{ "fill": ["rgba(101, 91, 230, 0.3)"],"stroke": ["rgba(101, 91, 230, 0.8)"]}'
-                        data-height="60">4,6,8,7,6,7,9,8,6,5,7,5,8,6,4,8,9,8,5,4</span>
+                    <span class="peity-line" data-width="100%" data-peity='{ "fill": ["rgba(101, 91, 230, 0.3)"],"stroke": ["rgba(101, 91, 230, 0.8)"]}' data-height="60">4,6,8,7,6,7,9,8,6,5,7,5,8,6,4,8,9,8,5,4</span>
                 </div>
 
 
@@ -200,8 +255,7 @@
                     </div>
                     <div class="col-6">
                         <div class="text-center">
-                            <span class="peity-pie" data-peity='{ "fill": ["#655be6", "#f2f2f2"]}' data-width="60"
-                                data-height="60">70/100</span>
+                            <span class="peity-pie" data-peity='{ "fill": ["#655be6", "#f2f2f2"]}' data-width="60" data-height="60">70/100</span>
                         </div>
                     </div>
                 </div>
@@ -228,13 +282,11 @@
 
                 <nav class="mt-4">
                     <div class="nav nav-tabs latest-messages-tabs nav-justified" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#nav-first"
-                            role="tab" aria-controls="nav-first" aria-selected="true">
+                        <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#nav-first" role="tab" aria-controls="nav-first" aria-selected="true">
                             <h4 class="mt-0">12</h4>
                             <p class="text-muted mb-0">November</p>
                         </a>
-                        <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#nav-second" role="tab"
-                            aria-controls="nav-second" aria-selected="false">
+                        <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#nav-second" role="tab" aria-controls="nav-second" aria-selected="false">
                             <h4 class="mt-0">13</h4>
                             <p class="text-muted mb-0">November</p>
                         </a>
@@ -247,8 +299,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-2.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-2.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Michael Bowen</h6>
                                                 <p class="text-muted mb-0">Hey! there I'm available...</p>
@@ -260,8 +311,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-3.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-3.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Danny Benson</h6>
                                                 <p class="text-muted mb-0">I've finished it! See you so...</p>
@@ -273,8 +323,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-4.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-4.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Brady Smith</h6>
                                                 <p class="text-muted mb-0">This theme is awesome!</p>
@@ -286,8 +335,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-5.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-5.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Danny Benson</h6>
                                                 <p class="text-muted mb-0">Nice to meet you</p>
@@ -305,8 +353,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-5.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-5.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Albert Jones</h6>
                                                 <p class="text-muted mb-0">Hey! there I'm available...</p>
@@ -318,8 +365,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-6.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-6.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Danny Benson</h6>
                                                 <p class="text-muted mb-0">I've finished it! See you so...</p>
@@ -331,8 +377,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-7.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-7.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Joseph Sanchez</h6>
                                                 <p class="text-muted mb-0">This theme is awesome!</p>
@@ -344,8 +389,7 @@
                                 <li class="message-list-item">
                                     <a href="#" class="text-dark">
                                         <div class="media">
-                                            <img class="mr-3 thumb-md rounded-circle"
-                                                src="assets/images/users/avatar-5.jpg" alt="">
+                                            <img class="mr-3 thumb-md rounded-circle" src="assets/images/users/avatar-5.jpg" alt="">
                                             <div class="media-body">
                                                 <h6 class="mt-0">Daniel Anderson</h6>
                                                 <p class="text-muted mb-0">Nice to meet you</p>
@@ -421,12 +465,10 @@
                 <form>
                     <div class="row">
                         <div class="col-8 rec-acti-input">
-                            <input type="text" name="rec-input-text" class="form-control"
-                                placeholder="Add new Activity">
+                            <input type="text" name="rec-input-text" class="form-control" placeholder="Add new Activity">
                         </div>
                         <div class="col-4 rec-acti-send">
-                            <button class="btn-primary btn-block btn" type="button"><i
-                                    class="mdi mdi-plus mr-1"></i>Add</button>
+                            <button class="btn-primary btn-block btn" type="button"><i class="mdi mdi-plus mr-1"></i>Add</button>
                         </div>
                     </div>
                 </form>
@@ -460,8 +502,7 @@
                                 <th scope="row">#16252</th>
                                 <td>
                                     <div>
-                                        <img src="assets/images/users/avatar-2.jpg" alt=""
-                                            class="thumb-sm rounded-circle mr-2"> Rafael Reardon
+                                        <img src="assets/images/users/avatar-2.jpg" alt="" class="thumb-sm rounded-circle mr-2"> Rafael Reardon
                                     </div>
                                 </td>
                                 <td>14/10/2018</td>
@@ -479,8 +520,7 @@
                                 <th scope="row">#16253</th>
                                 <td>
                                     <div>
-                                        <img src="assets/images/users/avatar-3.jpg" alt=""
-                                            class="thumb-sm rounded-circle mr-2"> Thomas Hirsch
+                                        <img src="assets/images/users/avatar-3.jpg" alt="" class="thumb-sm rounded-circle mr-2"> Thomas Hirsch
                                     </div>
                                 </td>
                                 <td>15/10/2018</td>
@@ -498,8 +538,7 @@
                                 <th scope="row">#16254</th>
                                 <td>
                                     <div>
-                                        <img src="assets/images/users/avatar-4.jpg" alt=""
-                                            class="thumb-sm rounded-circle mr-2"> Archer Desaillly
+                                        <img src="assets/images/users/avatar-4.jpg" alt="" class="thumb-sm rounded-circle mr-2"> Archer Desaillly
                                     </div>
                                 </td>
                                 <td>15/10/2018</td>
@@ -517,8 +556,7 @@
                                 <th scope="row">#16255</th>
                                 <td>
                                     <div>
-                                        <img src="assets/images/users/avatar-5.jpg" alt=""
-                                            class="thumb-sm rounded-circle mr-2"> Michael Flannery
+                                        <img src="assets/images/users/avatar-5.jpg" alt="" class="thumb-sm rounded-circle mr-2"> Michael Flannery
                                     </div>
                                 </td>
                                 <td>16/10/2018</td>
@@ -536,8 +574,7 @@
                                 <th scope="row">#16256</th>
                                 <td>
                                     <div>
-                                        <img src="assets/images/users/avatar-6.jpg" alt=""
-                                            class="thumb-sm rounded-circle mr-2"> Jamie Fishbourne
+                                        <img src="assets/images/users/avatar-6.jpg" alt="" class="thumb-sm rounded-circle mr-2"> Jamie Fishbourne
                                     </div>
                                 </td>
                                 <td>17/10/2018</td>

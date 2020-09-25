@@ -1,8 +1,10 @@
 <?php
 session_start();
-require_once $_SERVER['DOCUMENT_ROOT'] .'/j&m/app/modulos/ventas/ventas.modelo.php';
-require_once $_SERVER['DOCUMENT_ROOT'] .'/j&m/app/modulos/ventas/ventas.controlador.php';
-require_once $_SERVER['DOCUMENT_ROOT'] .'/j&m/app/modulos/app/app.controlador.php';
+include_once '../../../config.php';
+
+require_once DOCUMENT_ROOT .'app/modulos/ventas/ventas.modelo.php';
+require_once DOCUMENT_ROOT .'app/modulos/ventas/ventas.controlador.php';
+require_once DOCUMENT_ROOT .'app/modulos/app/app.controlador.php';
 
 
 class VentasAjax
@@ -46,6 +48,7 @@ class VentasAjax
 
     public function ajaxListarAbonos()
     {
+        
         $abonos = VentasModelo::mdlConsultarAbonosVentas($this->vts_factura);
         // echo "<pre>", print_r($abonos), "</pre>";
         $html = "";

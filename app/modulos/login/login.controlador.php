@@ -31,7 +31,7 @@ class LoginControlador
               echo
                 '
                     <script>
-                        window.location.href = "./";
+                        window.location.href = "./home";
                     </script>';
             
 
