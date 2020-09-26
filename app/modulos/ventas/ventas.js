@@ -2,9 +2,9 @@ $(document).on("ready", function () {
 })
 
 
-
-listarVendedores();
 listarClientes();
+listarVendedores();
+
 
 $("#formAddVendedor").on("submit", function (e) {
     e.preventDefault()
@@ -185,7 +185,78 @@ $(".tablaVentas tbody").on("click", "button.btnListarAbonos", function () {
     });
 })
 
+$(".tablaVentas tbody").on("click", "button.btnEliminarVenta", function () {
+    var vts_factura = $(this).attr("vts_factura");
+    swal({
+        title: "¿Seguro de querer eliminar esta venta?",
+        text: "La venta con número " + vts_factura + " será eliminada y todo lo relacionado, es decir también los abonos realizados a esta venta. ¿Deseas continuar?",
+        icon: "warning",
+        buttons: ["No, cancelar", "Si, eliminar la venta con número " + vts_factura],
+        dangerMode: false,
+        closeOnClickOutside: false,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append("btnEliminarVenta", true);
+                datos.append("vts_factura", vts_factura);
 
+                $.ajax({
+                    type: "POST",
+                    url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
+                    data: datos,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+
+                    },
+                    success: function (res) {
+
+                        if (res.status) {
+                            swal({
+                                title: "Muy bien",
+                                text: res.mensaje,
+                                icon: "success",
+                                buttons: [false, "Continuar"],
+                                dangerMode: true,
+                                closeOnClickOutside: false,
+
+                            })
+                                .then((willDelete) => {
+                                    if (willDelete) {
+                                        location.href = res.pagina
+                                    } else {
+                                        location.href = res.pagina
+                                    }
+                                });
+                        } else {
+                            swal({
+                                title: "Error",
+                                text: res.mensaje,
+                                icon: "error",
+                                buttons: [false, "Continuar"],
+                                dangerMode: true,
+                                closeOnClickOutside: false,
+
+                            })
+                                .then((willDelete) => {
+                                    if (willDelete) {
+                                        location.href = res.pagina
+                                    } else {
+                                        location.href = res.pagina
+                                    }
+                                });
+
+                        }
+
+
+                    }
+                });
+            }
+        });
+
+})
 
 function listarClientes() {
     var datos = new FormData()
@@ -194,7 +265,7 @@ function listarClientes() {
 
     $.ajax({
         type: "POST",
-        url: './app/modulos/ventas/ventas.ajax.php',
+        url: urlApp + './app/modulos/ventas/ventas.ajax.php',
         data: datos,
         dataType: "json",
         processData: false,

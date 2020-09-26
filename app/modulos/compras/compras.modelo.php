@@ -80,7 +80,7 @@ class ComprasModelo
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $cps_folio);
                 $pps->execute();
-                return $pps->fetchAll();
+                return $pps->fetch();
             }
         } catch (\PDOException $th) {
             throw $th;
@@ -127,6 +127,44 @@ class ComprasModelo
                 $pps->execute();
                 return $pps->fetch();
             }
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlAdeudoCompra($cps_folio)
+    {
+
+        try {
+            $sql = "SELECT abs.abs_adeudo FROM tbl_abonos_abs_compras abs WHERE abs.abs_compra = ? ORDER BY abs.abs_id DESC LIMIT 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cps_folio);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarCompraAbono($datosA)
+    {
+
+        try {
+            $sql = "UPDATE tbl_compras_cps SET cps_fecha_pagado = ? , cps_estado_pagado = ? WHERE cps_folio = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datosA['cps_fecha_pagado']);
+            $pps->bindValue(2, $datosA['cps_estado_pagado']);
+            $pps->bindValue(3, $datosA['abs_compra']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (\PDOException $th) {
             throw $th;
         } finally {

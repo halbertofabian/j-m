@@ -2,9 +2,9 @@
 session_start();
 include_once '../../../config.php';
 
-require_once DOCUMENT_ROOT .'app/modulos/ventas/ventas.modelo.php';
-require_once DOCUMENT_ROOT .'app/modulos/ventas/ventas.controlador.php';
-require_once DOCUMENT_ROOT .'app/modulos/app/app.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/ventas/ventas.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/ventas/ventas.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 
 
 class VentasAjax
@@ -48,7 +48,7 @@ class VentasAjax
 
     public function ajaxListarAbonos()
     {
-        
+
         $abonos = VentasModelo::mdlConsultarAbonosVentas($this->vts_factura);
         // echo "<pre>", print_r($abonos), "</pre>";
         $html = "";
@@ -75,6 +75,11 @@ class VentasAjax
         echo json_encode($crearAbono, true);
     }
 
+    public function ajaxEliminarVenta()
+    {
+        $eliminarVenta = VentasControlador::ctrEliminarVenta($this->vts_factura);
+        echo json_encode($eliminarVenta);
+    }
 }
 
 if (isset($_POST['btnCrearVendedor'])) {
@@ -110,3 +115,8 @@ if (isset($_POST['btnGuardarAbono'])) {
     $guardarAbono->ajaxGuardarAbonos();
 }
 
+if (isset($_POST['btnEliminarVenta'])) {
+    $eliminarVenta = new VentasAjax();
+    $eliminarVenta->vts_factura = $_POST['vts_factura'];
+    $eliminarVenta->ajaxEliminarVenta();
+}

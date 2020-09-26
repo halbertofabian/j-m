@@ -9,6 +9,7 @@ require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class ComprasAjax
 {
     public $pvs_nombre;
+    public $cps_folio;
 
     public function ajaxCrearProveedor()
     {
@@ -25,6 +26,14 @@ class ComprasAjax
 
         echo json_encode($res);
     }
+
+    public function ajaxLiquidarCompra()
+    {
+
+        $res = ComprasControlador::ctrLiquidarCompra($this->cps_folio);
+
+        echo json_encode($res);
+    }
 }
 
 
@@ -37,4 +46,10 @@ if (isset($_POST['btnCrearProveedor'])) {
 if (isset($_POST['btnListarProveedores'])) {
     $listaProveedores = new ComprasAjax();
     $listaProveedores->ajaxCrearListaProveedores();
+}
+
+if (isset($_POST['btnLiquidarCompra'])) {
+    $liquidarCompra = new ComprasAjax();
+    $liquidarCompra->cps_folio = $_POST['cps_folio'];
+    $liquidarCompra->ajaxLiquidarCompra();
 }

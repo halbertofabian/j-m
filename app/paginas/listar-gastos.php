@@ -10,9 +10,11 @@
             <button class="btn btn-dark float-right mb-1 btnListarGastos"><i class="fa fa-list" aria-hidden="true"></i> Lista</button>
         </div>
         <?php
+        $totalGastos = 0;
         $cetegorias = GastosModelo::mdlConsultarCategorias();
 
         foreach ($cetegorias as $key => $gts) :
+            $gastosT = 0;
         ?>
             <div class="col-12 col-md-12">
                 <div class="card">
@@ -40,7 +42,7 @@
                                             <?php
                                             $gastos = GastosModelo::mdlConsultarGastos("", $gts['gts_id']);
                                             foreach ($gastos as $key => $tgts) :
-
+                                                $gastosT += $tgts['tgts_cantidad'];
                                             ?>
                                                 <tr>
 
@@ -59,19 +61,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <span class="text-primary">Total </span><strong>$ <?php $totalGastos += $gastosT;
+                                                                            echo  number_format($gastosT, 2);  ?></strong>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>
+        <hr>
+        <div class="col-12">
+            <h5><?php echo 'Total de gastos $ ' . number_format($totalGastos, 2) ?></h5>
+
+        </div>
     </div>
 
-    <div class="row" id="lista-gastos">
+    <div class="row " id="lista-gastos">
         <div class="col-12">
             <button class="btn btn-dark float-right mb-1 btnListarGastosCat "><i class="fa fa-th" aria-hidden="true"></i> Categoría</button>
         </div>
         <div class="col-12">
 
             <div class="table-responsive">
-                <table class="table tablaGastos table-light tablas  table-striped">
+                <table class="table tablaGastos table-light tablas  table-striped" >
                     <thead>
                         <tr>
                             <th>#Número de gasto</th>

@@ -76,4 +76,52 @@ class ComprasControlador
             );
         }
     }
+
+    public static function ctrLiquidarCompra($cps_folio)
+    {
+        $url = AppControlador::obtenerRutaBackend();
+        date_default_timezone_set('America/Mexico_city');
+
+
+        $detalleCompra = ComprasModelo::mdlConsultarCompra($cps_folio);
+        $adeudo = ComprasModelo::mdlAdeudoCompra($cps_folio);
+
+        //echo '<pre>', print_r($adeudo), '</pre>';
+        //echo '<pre>', print_r($detalleCompra), '</pre>';
+
+        $datosCompra = array(
+            'cps_fecha_pagado' => date("Y-m-d H:i:s"),
+            'cps_estado_pagado' => 1,
+            'abs_compra' => $cps_folio,
+            'abs_monto' => $adeudo['abs_adeudo'],
+            'abs_fecha' => date("Y-m-d H:i:s"),
+            'abs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
+            'abs_adeudo' => 0.00,
+            'abs_mp' => $detalleCompra['cps_mp'],
+
+        );
+        $actualizarCompra = ComprasModelo::mdlActualizarCompraAbono($datosCompra);
+        if ($actualizarCompra) {
+            $crearAbono = ComprasModelo::mdlCrearAbonoCompra($datosCompra);
+            if ($crearAbono) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Compra liquidada',
+                    'pagina' => 'listar-compras'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'La compra se liquido, pero no registro el abono',
+                    'pagina' => 'listar-compras'
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Ocurrio un error, intente de nuevo',
+                'pagina' => 'listar-compras'
+            );
+        }
+    }
 }

@@ -2,7 +2,7 @@
 class AppControlador
 {
     public static function obtenerRutaBackend()
-    { 
+    {
         return HTTP_HOST;
     }
     public  function iniciarApp()
@@ -19,7 +19,7 @@ class AppControlador
         include_once 'app/paginas/' . $rutaPagina . '.php';
     }
 
-    public function obtenerComponente($componente, $rutas = "", $label = "")
+    public function obtenerComponente($componente, $rutas = "", $label = "", $paginas = "")
     {
         $app = new AppControlador();
         $url = AppControlador::obtenerRutaBackend();
@@ -39,6 +39,8 @@ class AppControlador
                     icon: "' . $tipo . '",
                     buttons: [false,"Continuar"],
                     dangerMode: true,
+                    closeOnClickOutside: false,
+
                 })
                 .then((willDelete) => {
                     if (willDelete) {
@@ -59,6 +61,7 @@ class AppControlador
                     icon: "' . $tipo . '",
                     buttons: [false,"Continuar"],
                     dangerMode: true,
+                    closeOnClickOutside: false,
                 })
                 .then((willDelete) => {
                     if (willDelete) {

@@ -3,7 +3,7 @@ class VentasControlador
 {
     public static function ctrGuardarVenta()
     {
-        
+
         if (isset($_POST['btnGuardarVenta'])) {
 
             date_default_timezone_set('America/Mexico_city');
@@ -48,6 +48,57 @@ class VentasControlador
                 }
             } else {
                 AppControlador::msj('error', 'Ocurrio un error', 'Número de venta repetido', '');
+            }
+        }
+    }
+
+    public static function ctrEditarVenta()
+    {
+
+        if (isset($_POST['btnEditarVenta'])) {
+
+            date_default_timezone_set('America/Mexico_city');
+            $url = AppControlador::obtenerRutaBackend();
+
+
+            $_POST['vts_cantidad'] = str_replace(",", "", $_POST['vts_cantidad']);
+            $_POST['abs_monto'] = str_replace(",", "", 0.00);
+            $_POST['abs_adeudo'] = $_POST['vts_cantidad'] - $_POST['abs_monto'];
+
+            $_POST['vts_fecha_pagado'] = null;
+            $_POST['vts_estado_pagado'] = 0;
+
+
+
+            if ($_POST['vts_tp'] == 'Contado' || $_POST['vts_cantidad'] == $_POST['abs_monto']) {
+                if ($_POST['abs_adeudo'] != 0 && $_POST['vts_cantidad'] != $_POST['abs_monto']) {
+                    AppControlador::msj('error', '', 'Error no esperado', '');
+                    die();
+                }
+
+                $_POST['vts_fecha_pagado'] = date("Y-m-d H:i:s");
+                $_POST['vts_estado_pagado'] = 1;
+            }
+
+            $_POST['vts_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+
+
+            $crearVenta = VentasModelo::mdlEditarVenta($_POST);
+            if ($crearVenta) {
+                // $crearAbono = VentasModelo::mdlCrearAbono(array(
+                //     'abs_venta' => $_POST['vts_factura'],
+                //     'abs_monto' => $_POST['abs_monto'],
+                //     'abs_fecha' => date("Y-m-d H:i:s"),
+                //     'abs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
+                //     'abs_adeudo' => $_POST['abs_adeudo'],
+                //     'abs_mp' => $_POST['vts_mp'],
+
+                // ));
+                // if ($crearAbono) {
+                AppControlador::msj('success', 'Muy bien', 'Venta actualizada', $url . 'abonos/' . $_POST['vts_factura']);
+                // }
+            } else {
+                AppControlador::msj('warning', '', '', $url.'listar-ventas');
             }
         }
     }
@@ -171,5 +222,31 @@ class VentasControlador
             );
         }
         //echo "<pre>", print_r($abonos), "</pre>";
+    }
+
+    public static function ctrEliminarVenta($vts_factura)
+    {
+
+        $eliminarVenta = VentasModelo::mdlEliminarVenta($vts_factura);
+
+        // if ($eliminarVenta) {
+        //     AppControlador::msj('success', 'Muy bien', 'Venta eliminada con éxito', './listar-ventas');
+        // } else {
+        //     AppControlador::msj('error', 'Error', 'Venta no eliminada, vuelve a intentarlo', './listar-ventas');
+        // }
+        if ($eliminarVenta) {
+            return array(
+                'status' => true,
+                'mensaje' => 'Venta eliminada con éxito',
+                'pagina' => 'listar-ventas'
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Ocurrio un error, vuelve a intentarlo',
+                'pagina' => 'listar-ventas'
+
+            );
+        }
     }
 }

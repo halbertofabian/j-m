@@ -120,7 +120,7 @@
                     <div class="container-fluid">
 
                         <?php
-                    
+
 
                         $arrayRutas = array();
 
@@ -182,6 +182,8 @@
     <script src="<?php echo $url . 'app/plugins/' ?>raphael/raphael-min.js"></script>
 
     <script src="<?php echo $url . 'app/assets/' ?>pages/dashboard.js"></script>
+    <script src="<?php echo $url . 'app/assets/' ?>js/table2excel.js"></script>
+
 
     <!-- App js -->
     <script src="<?php echo $url . 'app/assets/' ?>js/app.js"></script>
