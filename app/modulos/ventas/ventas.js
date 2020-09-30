@@ -389,7 +389,7 @@ function listarCuentasCobrar(valores) {
 
         },
         success: function (res) {
-            //$(".div-load").html(`hh`)
+            $(".div-load").html(``)
             var html = `
             <div class="col-12">
                 <div class="table-responsive" id="tblCuentasCobrar">
