@@ -126,27 +126,7 @@ class VentasControlador
         }
     }
 
-    public static function ctrCrearCliente($cliente)
-    {
-
-
-
-        $crearCliente = VentasModelo::mdlCrearCliente(array(
-            'cts_nombre' => $cliente['cts_nombre']
-        ));
-
-        if ($crearCliente) {
-            return array(
-                'status' => true,
-                'mensaje' => 'Registro creado con éxito'
-            );
-        } else {
-            return array(
-                'status' => false,
-                'mensaje' => 'Ocurrio un error, es probable que ya exista este registro'
-            );
-        }
-    }
+  
 
     public static function ctrCrearAbono()
     {
@@ -249,4 +229,5 @@ class VentasControlador
             );
         }
     }
+    
 }

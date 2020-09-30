@@ -41,7 +41,7 @@
                 <li>
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i><span> Clientes <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                     <ul class="submenu collapse">
-                        <li><a href="<?php echo $url .'' ?>">Nuevo cliente</a></li>
+                        <li><a href="<?php echo $url .'clientes' ?>">Nuevo cliente</a></li>
                         <li><a href="<?php echo $url .'' ?>">Listar clientes</a></li>
                     </ul>
                 </li>
@@ -53,7 +53,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-bar-chart" aria-hidden="true"></i><span> Reportes <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
+                    <a href="<?php $url.'reportes' ?>" class="waves-effect"><i class="fa fa-bar-chart" aria-hidden="true"></i><span> Reportes <span class="float-right menu-arrow"><i class="mdi mdi-chevron-right"></i></span> </span></a>
                     <ul class="submenu collapse">
                         <li><a href="<?php echo $url .'' ?>">Informe  de cuentas por cobrar</a></li>
                         <li><a href="<?php echo $url .'' ?>">Informe  de cuentas por pagar</a></li>

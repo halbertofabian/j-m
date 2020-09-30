@@ -137,7 +137,11 @@
                                 $arrayRutas[0] == 'listar-compras' ||
                                 $arrayRutas[0] == 'gastos' ||
                                 $arrayRutas[0] == 'listar-gastos' ||
-                                $arrayRutas[0] == 'categorias'
+                                $arrayRutas[0] == 'categorias' || 
+                                $arrayRutas[0] == 'clientes' ||
+                                $arrayRutas[0] == 'listar-clientes' ||
+                                $arrayRutas[0] == 'reportes'
+
 
 
                             ) {
@@ -191,6 +195,8 @@
     <script src="<?php echo $url . 'app/modulos/ventas/ventas.js' ?>"></script>
     <script src="<?php echo $url . 'app/modulos/compras/compras.js' ?>"></script>
     <script src="<?php echo $url . 'app/modulos/gastos/gastos.js' ?>"></script>
+    <script src="<?php echo $url . 'app/modulos/clientes/clientes.js' ?>"></script>
+
 
 
 

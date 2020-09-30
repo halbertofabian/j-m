@@ -10,7 +10,7 @@ require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class VentasAjax
 {
     public $usr_nombre;
-    public $cts_nombre;
+
     public $vts_factura;
 
     public function ajaxCrearVendedor()
@@ -21,14 +21,7 @@ class VentasAjax
 
         echo json_encode($res);
     }
-    public function ajaxCrearCliente()
-    {
-        $cliente = array('cts_nombre' => $this->cts_nombre);
 
-        $res = VentasControlador::ctrCrearCliente($cliente);
-
-        echo json_encode($res);
-    }
 
     public function ajaxCrearListaVendedores()
     {
@@ -38,13 +31,7 @@ class VentasAjax
         echo json_encode($res);
     }
 
-    public function ajaxCrearListaClientes()
-    {
 
-        $res = VentasModelo::mdlConsultarClientes();
-
-        echo json_encode($res);
-    }
 
     public function ajaxListarAbonos()
     {
@@ -80,6 +67,18 @@ class VentasAjax
         $eliminarVenta = VentasControlador::ctrEliminarVenta($this->vts_factura);
         echo json_encode($eliminarVenta);
     }
+
+    public function ajaxListarCuentasCobradas()
+    {
+        date_default_timezone_set('America/Mexico_city');
+
+        if ($_POST['vts_fecha_cobro'] == "") {
+            $_POST['vts_fecha_cobro'] = date("Y-m-d");
+        }
+
+        $res = VentasModelo::mdlConsultarVentasPorCobrar($_POST);
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnCrearVendedor'])) {
@@ -88,21 +87,14 @@ if (isset($_POST['btnCrearVendedor'])) {
     $crearVendedor->ajaxCrearVendedor();
 }
 
-if (isset($_POST['btnCrearCliente'])) {
-    $crearCliente = new VentasAjax();
-    $crearCliente->cts_nombre = $_POST['cts_nombre'];
-    $crearCliente->ajaxCrearCliente();
-}
+
 
 if (isset($_POST['btnListarVendedores'])) {
     $listaVendedores = new VentasAjax();
     $listaVendedores->ajaxCrearListaVendedores();
 }
 
-if (isset($_POST['btnListarClientes'])) {
-    $listaClientes = new VentasAjax();
-    $listaClientes->ajaxCrearListaClientes();
-}
+
 
 if (isset($_POST['btnListarAbonos'])) {
     $ListarAbonos = new VentasAjax();
@@ -119,4 +111,9 @@ if (isset($_POST['btnEliminarVenta'])) {
     $eliminarVenta = new VentasAjax();
     $eliminarVenta->vts_factura = $_POST['vts_factura'];
     $eliminarVenta->ajaxEliminarVenta();
+}
+
+if (isset($_POST['listarCuentasCobrar'])) {
+    $listarCuentasCobrar = new VentasAjax();
+    $listarCuentasCobrar->ajaxListarCuentasCobradas();
 }

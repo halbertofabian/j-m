@@ -109,7 +109,8 @@ class VentasModelo
     public static function mdlConsultarVenta($vts_factura = "", $vts_vendedor = "")
     {
         try {
-            if ($vts_factura == "" && $vts_vendedor != "") {
+
+             if ($vts_factura == "" && $vts_vendedor != "") {
                 $sql = "SELECT vts.*,usr.usr_nombre,cts.cts_nombre FROM tbl_ventas_vts vts JOIN  tbl_usuarios_usr usr ON  vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON  vts.vts_cliente = cts.cts_id  WHERE vts.vts_vendedor  = ? ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
@@ -137,6 +138,24 @@ class VentasModelo
             $con = null;
         }
     }
+    // Cuentas por cobrar 
+    public static function mdlConsultarVentasPorCobrar($vts)
+    {
+        try {
+            
+            $sql = "SELECT vts.*,usr.*,cts.* FROM tbl_ventas_vts vts JOIN tbl_usuarios_usr usr ON vts.vts_vendedor = usr.usr_id JOIN tbl_clientes_cts cts ON vts.vts_cliente = cts.cts_id WHERE vts.vts_vendedor LIKE '%$vts[vts_vendedor]%' AND vts.vts_cliente LIKE '%$vts[vts_cliente]%' AND vts.vts_factura LIKE '%$vts[vts_factura]%' AND vts.vts_estado_pagado = 0 AND vts_fecha_cobro LIKE '%$vts[vts_fecha_cobro]%' ";
+            $con = Conexion::conectar();
+            $pps = $con -> prepare($sql);
+            $pps -> execute();
+            return $pps->fetchAll();
+
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlCrearVendedor($vendedor)
     {
@@ -157,23 +176,7 @@ class VentasModelo
         }
     }
 
-    public static function mdlCrearCliente($cliente)
-    {
 
-        try {
-            $sql = "INSERT INTO tbl_clientes_cts (cts_nombre) VALUES(?)";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->bindValue(1, $cliente['cts_nombre']);
-            $pps->execute();
-            return $pps->rowCount() > 0;
-        } catch (\PDOException $th) {
-            throw $th;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
 
     public static function mdlConsultarVendedores($usr_id = "")
     {
@@ -192,7 +195,7 @@ class VentasModelo
                 $pps->execute();
                 return $pps->fetch();
             }
-        } catch (\PDOException $th) {
+        } catch (PDOException $th) {
             throw $th;
         } finally {
             $pps = null;
@@ -200,30 +203,7 @@ class VentasModelo
         }
     }
 
-    public static function mdlConsultarClientes($cts_id = "")
-    {
-        try {
-            if ($cts_id == "") {
-                $sql = "SELECT * FROM tbl_clientes_cts ORDER BY cts_id DESC ";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->execute();
-                return $pps->fetchAll();
-            } elseif ($cts_id != "") {
-                $sql = "SELECT * FROM tbl_clientes_cts WHERE cts_id  = ? ";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $cts_id);
-                $pps->execute();
-                return $pps->fetch();
-            }
-        } catch (\PDOException $th) {
-            throw $th;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
+
 
     //SELECT vts.*,abs.* FROM tbl_ventas_vts vts JOIN tbl_abonos_abs_ventas abs ON vts.vts_factura = abs.abs_venta; 
 

@@ -2,7 +2,7 @@ $(document).on("ready", function () {
 })
 
 
-listarClientes();
+
 listarVendedores();
 
 
@@ -78,42 +78,6 @@ function listarVendedores() {
 
 
 
-$("#formAddCliente").on("submit", function (e) {
-    e.preventDefault()
-
-    var datos = new FormData(this)
-
-    datos.append("btnCrearCliente", true)
-
-    $.ajax({
-        type: "POST",
-        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
-        data: datos,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-
-        },
-        success: function (res) {
-
-            if (res.status) {
-                toastr.success(res.mensaje, 'Correcto')
-                $("#cts_nombre").val("")
-                $('#mdlCliente').modal('hide')
-
-                $('#vts_cliente option').remove();
-                listarClientes();
-                $("#vts_cliente option:selected").last().val()
-
-            } else {
-                toastr.error(res.mensaje, 'Error')
-
-            }
-
-        }
-    });
-})
 
 $("#formGuardarAbono").on("submit", function (e) {
     e.preventDefault()
@@ -258,35 +222,7 @@ $(".tablaVentas tbody").on("click", "button.btnEliminarVenta", function () {
 
 })
 
-function listarClientes() {
-    var datos = new FormData()
 
-    datos.append("btnListarClientes", true)
-
-    $.ajax({
-        type: "POST",
-        url: urlApp + './app/modulos/ventas/ventas.ajax.php',
-        data: datos,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
-
-        },
-        success: function (res) {
-
-            res.forEach(element => {
-
-                $('#vts_cliente').prepend(`<option value='${element.cts_id}' >${element.cts_nombre}</option>`);
-
-            });
-
-
-
-
-        }
-    });
-}
 
 
 $('#daterange-btn').daterangepicker(
@@ -393,3 +329,123 @@ $(".theDateTo").val(todayTo)
 
 
 
+function btnEnviarCorreo(cts_correo) {
+    alert(cts_correo)
+}
+
+function btnEnviarWp(cts_numero) {
+    alert("hola")
+}
+
+$("#formCuentasCobrar").on("submit", function (e) {
+    e.preventDefault()
+
+    listarCuentasCobrar([
+        $("#vts_vendedor").val(),
+        $("#vts_cliente").val(),
+        $("#vts_factura").val(),
+        '',
+        '',
+        ''
+    ])
+
+
+
+})
+
+
+listarCuentasCobrar(['', '', '', '', '', ''])
+
+function listarCuentasCobrar(valores) {
+
+    var datos = new FormData()
+    datos.append("vts_vendedor", valores[0])
+    datos.append("vts_cliente", valores[1])
+    datos.append("vts_factura", valores[2])
+    datos.append("vts_fecha_cobro", valores[3])
+    datos.append("vts_fecha_cobro_inicio", valores[4])
+    datos.append("vts_fecha_cobro_fin", valores[5])
+    datos.append("listarCuentasCobrar", true)
+
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
+        data: datos,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $(".div-load").html(
+                `<div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                `)
+
+        },
+        success: function (res) {
+            //$(".div-load").html(`hh`)
+            var html = `
+            <div class="col-12">
+                <div class="table-responsive" id="tblCuentasCobrar">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#Número de fectura</th>
+                                <th>Estado</th>
+                                <th>Vendedor</th>
+                                <th>Clientes</th>
+                                <th>Teléfono</th>
+                                <th>Fecha de venta</th>
+                                <th>Fechas de cobro</th>
+                                <th>Cantidad</th>
+                                <th>Adeudo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyCuentasCobrar">`;
+            if (res.length > 0) {
+                res.forEach(vts => {
+                    html +=
+                        `<tr>
+                <td>${vts['vts_factura']}</td>
+                <td>
+                <button type="button" onclick="btnLiquidarVenta('${vts['vts_factura']}')" class="btn btn-success">Liquidar</button>
+                </td>
+                <td>${vts['usr_nombre']}</td>
+                <td>${vts['cts_nombre']}</td>
+                <td>${vts['cts_telefono']}</td>
+                <td>${vts['vts_fecha_venta']}</td>
+                <td>${vts['vts_fecha_cobro']}</td>
+                <td>${vts['vts_cantidad']}</td>
+                <td></td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" onclick="btnEnviarCorreo('${vts['cts_correo']}')" class="btn btn-dark"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+                        <button type="button" onclick="btnEnviarWp('${vts['cts_telefono']}')" class="btn btn-success"><i class="fa fa-whatsapp" aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>`;
+
+                });
+            } else {
+                html +=
+                    `<td class="text-center" colspan="10">
+                        No se encontraron resultados
+                    </td>`
+            }
+            html += `
+            </tbody>
+                    </table>
+                </div>
+            </div>`;
+            $("#divCuentasCobrar").html(html)
+        }
+    })
+
+}
