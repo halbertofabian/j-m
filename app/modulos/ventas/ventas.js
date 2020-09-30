@@ -386,6 +386,7 @@ function listarCuentasCobrar(valores) {
                     <span class="sr-only">Loading...</span>
                 </div>
                 `)
+           $("#tbodyCuentasCobrar").html("")     
 
         },
         success: function (res) {
